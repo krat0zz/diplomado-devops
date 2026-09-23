@@ -10,11 +10,13 @@
 
 name: CI
 
+
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]        # TODO reto 1: reemplazar por push a main y pull_request
+
 
 jobs:
   pruebas:
