@@ -18,7 +18,6 @@ on:
 
 jobs:
   pruebas:
-    name: Pruebas
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -31,6 +30,7 @@ jobs:
       # TODO reto 1: instalar Python 3.12 (actions/setup-python@v7)
       # TODO reto 1: instalar las dependencias
       # TODO reto 1: correr las pruebas
+
 
 
 
