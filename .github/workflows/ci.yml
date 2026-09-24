@@ -36,18 +36,34 @@ jobs:
 
       
   pruebas:
-    name: Pruebas
+    name: Pruebas (Python ${{ matrix.python-version }})
     needs: lint
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.12", "3.13"]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
         with:
-          python-version: "3.12"
+          python-version: ${{ matrix.python-version }}
           cache: pip
           cache-dependency-path: requirements-dev.txt
       - run: pip install -r requirements-dev.txt
-      - run: pytest -v
+      - name: Pruebas con cobertura (minimo 80%)
+        run: pytest -v --cov=app --cov-report=term-missing --cov-report=xml --cov-fail-under=80
+      - name: Guardar
+        if: matrix.python-version =='3.12'
+        uses: actions/upload-artifact@v7
+        with:
+          name: cobertura
+          path: coverage.xml
+      - name: Por ahora no verifica nada
+        run: echo "el pipeline corre pero todavia no verifica nada"
+
+
+        
 
       # TODO reto 1: instalar Python 3.12 (actions/setup-python@v7)
       # TODO reto 1: instalar las dependencias
